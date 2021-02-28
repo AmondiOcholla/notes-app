@@ -7,42 +7,55 @@ const addNoteBtn = document.querySelector(".submit-btn");
 const cardsSection = document.querySelector(".card-section");
 
 const addNewNote = (e) => {
-    // prevent default form behaviour
-    e.preventDefault();
+  // prevent default form behaviour
+  e.preventDefault();
 
-    //   access note information
-    const titleValue = titleInput.value;
-    const dateValue = dateInput.value;
-    const descriptionValue = descriptionInput.value;
+  //   access note information
+  const titleValue = titleInput.value;
+  const dateValue = dateInput.value;
+  const descriptionValue = descriptionInput.value;
 
-    //   store note to local storage
-    // notes = [
-    //     {}
-    //     {}
-    //     {}
-    //     {}
-    // ]
+  const disabledAddNoteButton =
+    !titleValue ||
+    !titleValue.trim() ||
+    !dateValue ||
+    !descriptionValue ||
+    !descriptionValue.trim();
 
-    let existingNotes = JSON.parse(localStorage.getItem("notes")) ? JSON.parse(localStorage.getItem("notes")) : [];
+  if (disabledAddNoteButton) {
+    return;
+  }
 
-    existingNotes = [
-        ...existingNotes,
-        {
-            title: titleValue,
-            date: dateValue,
-            description: descriptionValue,
-        },
-    ];
+  //   store note to local storage
+  // notes = [
+  //     {}
+  //     {}
+  //     {}
+  //     {}
+  // ]
 
-    localStorage.setItem("notes", JSON.stringify(existingNotes));
+  let existingNotes = JSON.parse(localStorage.getItem("notes"))
+    ? JSON.parse(localStorage.getItem("notes"))
+    : [];
 
-    const newCard = `<article class="note-card">
+  existingNotes = [
+    ...existingNotes,
+    {
+      title: titleValue,
+      date: dateValue,
+      description: descriptionValue,
+    },
+  ];
+
+  localStorage.setItem("notes", JSON.stringify(existingNotes));
+
+  const newCard = `<article class="note-card">
                <div class="card-header">
                    <h1 class="card-header-text">${titleValue}</h1>
                    <span class="date">${dateValue}</span>
                </div>
-               <div class="card-decription">
-                   <p class="decription-text">
+               <div class="card-description">
+                   <p class="description-text">
                        ${descriptionValue}
                    </p>
                </div>
@@ -52,25 +65,25 @@ const addNewNote = (e) => {
                </div>
            </article>`;
 
-    cardsSection.insertAdjacentHTML("afterbegin", newCard);
+  cardsSection.insertAdjacentHTML("afterbegin", newCard);
 
-    titleInput.value = "";
-    dateInput.value = "";
-    descriptionInput.value = "";
+  titleInput.value = "";
+  dateInput.value = "";
+  descriptionInput.value = "";
 };
 
 addNoteBtn.addEventListener("click", addNewNote);
 
 window.addEventListener("DOMContentLoaded", (event) => {
-    if (localStorage.notes) {
-        JSON.parse(localStorage.notes).forEach((note) => {
-            const newCard = `<article class="note-card">
+  if (localStorage.notes) {
+    JSON.parse(localStorage.notes).forEach((note) => {
+      const newCard = `<article class="note-card">
                <div class="card-header">
                    <h1 class="card-header-text">${note.title}</h1>
                    <span class="date">${note.date}</span>
                </div>
-               <div class="card-decription">
-                   <p class="decription-text">
+               <div class="card-description">
+                   <p class="description-text">
                        ${note.description}
                    </p>
                </div>
@@ -80,9 +93,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
                </div>
            </article>`;
 
-            cardsSection.insertAdjacentHTML("afterbegin", newCard);
-        });
-    }
+      cardsSection.insertAdjacentHTML("afterbegin", newCard);
+    });
+  }
 });
 
 // template  strings-

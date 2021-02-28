@@ -93,7 +93,7 @@ header {
     font-weight: 400;
 }
 
-.description {
+.card-description {
     padding: .8rem 0;
     font-size: .9rem;
     border-bottom: 1px solid rgba(0, 0, 0, .3);
